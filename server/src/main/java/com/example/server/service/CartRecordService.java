@@ -22,4 +22,7 @@ public class CartRecordService {
         return cartRecordRepository.findAllByUserId(userId);
     }
 
+    public void updateCartRecord(CartRecord userCartRecord) {
+        cartRecordRepository.save(userCartRecord);
+    }
 }

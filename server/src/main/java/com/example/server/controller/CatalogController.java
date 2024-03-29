@@ -8,6 +8,7 @@ import com.example.server.service.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,18 +36,18 @@ public class CatalogController {
     }
 
     @PostMapping("api/catalog/add")
-    public String addCartRec(@RequestBody Map<String, String> data, Authentication authentication) {
+    public ResponseEntity<?> addCartRec(@RequestBody Map<String, String> data, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Product product = productService.getProduct(Integer.valueOf(data.get("productId")));
         List<CartRecord> userCartRecords = cartRecordService.findAllCartRecordsById(user.getId());
         for (CartRecord userCartRecord : userCartRecords) {
             if (Objects.equals(userCartRecord.getProduct(), product)) {
                 userCartRecord.setAmountProduct(userCartRecord.getAmountProduct() + Integer.parseInt(data.get("quantity")));
-//                cartRecordService.addCartRecord(userCartRecord);
-                return "redirect:/catalog";
+                cartRecordService.updateCartRecord(userCartRecord);
+                return ResponseEntity.ok("Product quantity updated in cart");
             }
         }
         cartRecordService.addCartRecord(user.getId(), product, Integer.parseInt(data.get("quantity")));
-        return "redirect:/catalog";
+        return ResponseEntity.ok("Product quantity updated in cart");
     }
 }
