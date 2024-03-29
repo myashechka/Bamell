@@ -25,4 +25,8 @@ public class CartRecordService {
     public void updateCartRecord(CartRecord userCartRecord) {
         cartRecordRepository.save(userCartRecord);
     }
+
+    public void deleteCartRecord(Integer cartRecordId) {
+        cartRecordRepository.deleteById(cartRecordId);
+    }
 }
