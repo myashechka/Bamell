@@ -60,6 +60,7 @@ public class SecurityConfig {
                         .requestMatchers("api/registration").permitAll()
                         .requestMatchers("api/catalog/add").authenticated()
                         .requestMatchers("api/cart").authenticated()
+                        .requestMatchers("api/users").hasAuthority("ROLE_ADMIN")
                         .anyRequest().permitAll()
                 )
                 .build();

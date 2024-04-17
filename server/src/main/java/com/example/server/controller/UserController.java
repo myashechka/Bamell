@@ -55,6 +55,10 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("api/users")
+    public String aaaaa(){
+        return "ПЭДРО ПЭДРО ПЭДРО ПЭДРО ПЭЭЭЭ";
+    }
     @PostMapping("api/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
